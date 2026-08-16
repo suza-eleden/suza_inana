@@ -28,7 +28,7 @@ echo
 echo "### 1. Signup solicitante"
 SOL_JSON="$(curl -sS "${BASE}/auth/v1/signup" \
   -H "apikey: ${ANON}" -H "Content-Type: application/json" \
-  -d "{\"email\":\"solicitante+${STAMP}@foinikis.test\",\"password\":\"${PASS}\"}")"
+  -d "{\"email\":\"solicitante+${STAMP}@example.com\",\"password\":\"${PASS}\"}")"
 echo "${SOL_JSON}"
 SOL_TOKEN="$(printf '%s' "${SOL_JSON}" | py 'import json,sys; print(json.load(sys.stdin)["access_token"])')"
 echo
@@ -36,7 +36,7 @@ echo
 echo "### 1b. Signup evaluador A"
 EA_JSON="$(curl -sS "${BASE}/auth/v1/signup" \
   -H "apikey: ${ANON}" -H "Content-Type: application/json" \
-  -d "{\"email\":\"eval-a+${STAMP}@foinikis.test\",\"password\":\"${PASS}\"}")"
+  -d "{\"email\":\"eval-a+${STAMP}@example.com\",\"password\":\"${PASS}\"}")"
 echo "${EA_JSON}"
 EA_TOKEN="$(printf '%s' "${EA_JSON}" | py 'import json,sys; print(json.load(sys.stdin)["access_token"])')"
 EA_UID="$(printf '%s' "${EA_JSON}" | py 'import json,sys; print(json.load(sys.stdin)["user"]["id"])')"
@@ -45,7 +45,7 @@ echo
 echo "### 1c. Signup evaluador B"
 EB_JSON="$(curl -sS "${BASE}/auth/v1/signup" \
   -H "apikey: ${ANON}" -H "Content-Type: application/json" \
-  -d "{\"email\":\"eval-b+${STAMP}@foinikis.test\",\"password\":\"${PASS}\"}")"
+  -d "{\"email\":\"eval-b+${STAMP}@example.com\",\"password\":\"${PASS}\"}")"
 echo "${EB_JSON}"
 EB_TOKEN="$(printf '%s' "${EB_JSON}" | py 'import json,sys; print(json.load(sys.stdin)["access_token"])')"
 echo

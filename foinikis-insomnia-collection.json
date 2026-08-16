@@ -1,0 +1,1354 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-08-16T12:35:00.000Z",
+  "__export_source": "insomnia.desktop.app:v10.0.0",
+  "resources": [
+    {
+      "_id": "wrk_foinikis",
+      "_type": "workspace",
+      "parentId": null,
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "Foinikis API",
+      "description": "Colección completa de endpoints HTTP/RPC para la API de evaluación post-sismo de Foinikis en Supabase.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_foinikis_base",
+      "_type": "environment",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "Entorno Supabase (Local / Cloud)",
+      "data": {
+        "base_url": "http://127.0.0.1:54321",
+        "anon_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
+        "service_role_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU",
+        "sol_token": "",
+        "ea_token": "",
+        "eb_token": "",
+        "solicitud_id": "",
+        "visita_id": "",
+        "visita_realizada_id": "",
+        "formulario_diligenciado_id": "",
+        "pin": "0000"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "anon_key",
+          "service_role_key",
+          "sol_token",
+          "ea_token",
+          "eb_token",
+          "solicitud_id",
+          "visita_id",
+          "visita_realizada_id",
+          "formulario_diligenciado_id",
+          "pin"
+        ]
+      },
+      "color": "#3ecf8e",
+      "isPrivate": false,
+      "metaSortKey": 1786901671745
+    },
+    {
+      "_id": "fld_1",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "1. Auth (Signup & Login)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 100
+    },
+    {
+      "_id": "fld_2",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "2. Registro de Usuarios",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 200
+    },
+    {
+      "_id": "fld_3",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "3. Solicitudes",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 300
+    },
+    {
+      "_id": "fld_4",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "4. Sistema (Service Role)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 400
+    },
+    {
+      "_id": "fld_5",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "5. Buzón y Gestión de Visitas",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 500
+    },
+    {
+      "_id": "fld_6",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "6. PIN y Verificación",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 600
+    },
+    {
+      "_id": "fld_7",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "7. Formulario y Respuestas",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 700
+    },
+    {
+      "_id": "fld_8",
+      "_type": "request_group",
+      "parentId": "wrk_foinikis",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "name": "8. Calificación y Casos Especiales",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 800
+    },
+    {
+      "_id": "req_1_1",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/auth/v1/signup",
+      "name": "Signup Solicitante",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"solicitante@example.com\",\n  \"password\": \"Prueba1234\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 101,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1_2",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/auth/v1/signup",
+      "name": "Signup Evaluador A",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"eval-a@example.com\",\n  \"password\": \"Prueba1234\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 102,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1_3",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/auth/v1/signup",
+      "name": "Signup Evaluador B",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"eval-b@example.com\",\n  \"password\": \"Prueba1234\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 103,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1_4",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/auth/v1/token?grant_type=password",
+      "name": "Login con Password",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"solicitante@example.com\",\n  \"password\": \"Prueba1234\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 104,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_2_1",
+      "_type": "request",
+      "parentId": "fld_2",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/registrar_persona",
+      "name": "registrar_persona (Solicitante)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nombre\": \"Ana Solicitante\",\n  \"telefono\": \"+573001112233\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 201,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_2_2",
+      "_type": "request",
+      "parentId": "fld_2",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/registrar_evaluador",
+      "name": "registrar_evaluador A (Voluntario)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"voluntario\",\n  \"tarjeta_profesional_path\": \"placeholder/tarjeta.jpg\",\n  \"transporte_propio\": true,\n  \"lng\": -74.0721,\n  \"lat\": 4.711,\n  \"radio_metros\": 15000,\n  \"ventana\": \"[\\\"2026-08-14T08:00:00+00\\\",\\\"2026-08-14T20:00:00+00\\\")\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 202,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_2_3",
+      "_type": "request",
+      "parentId": "fld_2",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/registrar_evaluador",
+      "name": "registrar_evaluador B (Oficial)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"oficial\",\n  \"tarjeta_profesional_path\": \"placeholder/tarjeta.jpg\",\n  \"transporte_propio\": false,\n  \"lng\": -74.0721,\n  \"lat\": 4.711,\n  \"radio_metros\": 20000,\n  \"ventana\": \"[\\\"2026-08-14T08:00:00+00\\\",\\\"2026-08-14T20:00:00+00\\\")\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.eb_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 203,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_3_1",
+      "_type": "request",
+      "parentId": "fld_3",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/crear_solicitud",
+      "name": "crear_solicitud",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"lng\": -74.0721,\n  \"lat\": 4.711,\n  \"talla\": \"m\",\n  \"ventana\": \"[\\\"2026-08-14T08:00:00+00\\\",\\\"2026-08-14T20:00:00+00\\\")\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 301,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_3_2",
+      "_type": "request",
+      "parentId": "fld_3",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/solicitudes?estado=eq.visita_pendiente&select=id,estado,talla",
+      "name": "GET solicitudes (visita_pendiente)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 302,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_3_3",
+      "_type": "request",
+      "parentId": "fld_3",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/solicitudes?estado=eq.evaluacion_parcial&select=id,estado,talla",
+      "name": "GET solicitudes (evaluacion_parcial)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 303,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_4_1",
+      "_type": "request",
+      "parentId": "fld_4",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/generar_visitas_potenciales",
+      "name": "generar_visitas_potenciales",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.service_role_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.service_role_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 401,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_4_2",
+      "_type": "request",
+      "parentId": "fld_4",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/alertas?select=*",
+      "name": "GET alertas del sistema",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.service_role_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.service_role_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 402,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5_1",
+      "_type": "request",
+      "parentId": "fld_5",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/buzon_evaluador?select=*",
+      "name": "GET buzon_evaluador A",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 501,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5_2",
+      "_type": "request",
+      "parentId": "fld_5",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/buzon_evaluador?select=id",
+      "name": "GET buzon_evaluador B",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.eb_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 502,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5_3",
+      "_type": "request",
+      "parentId": "fld_5",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/visitas_potenciales_api?estado=eq.creada&select=id,solicitud_id,evaluador_id,estado",
+      "name": "GET visitas_potenciales_api",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 503,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5_4",
+      "_type": "request",
+      "parentId": "fld_5",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/evaluadores?tipo=eq.voluntario&select=id,tipo,radio_metros,score_confianza",
+      "name": "GET evaluadores (voluntarios)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 504,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5_5",
+      "_type": "request",
+      "parentId": "fld_5",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/rechazar_visita",
+      "name": "rechazar_visita (Evaluador B)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_id\": \"{{ _.visita_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.eb_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 505,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5_6",
+      "_type": "request",
+      "parentId": "fld_5",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/aceptar_visita",
+      "name": "aceptar_visita (Evaluador A - Retorna PIN)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_id\": \"{{ _.visita_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 506,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_6_1",
+      "_type": "request",
+      "parentId": "fld_6",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/verificar_pin",
+      "name": "verificar_pin (Incorrecto -> Alerta)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_id\": \"{{ _.visita_id }}\",\n  \"pin\": \"0000\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 601,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_6_2",
+      "_type": "request",
+      "parentId": "fld_6",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/regenerar_pin",
+      "name": "regenerar_pin",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_id\": \"{{ _.visita_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 602,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_6_3",
+      "_type": "request",
+      "parentId": "fld_6",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/verificar_pin",
+      "name": "verificar_pin (Correcto)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_id\": \"{{ _.visita_id }}\",\n  \"pin\": \"{{ _.pin }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 603,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_1",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/visitas_realizadas?select=id,solicitud_id,evaluador_id,concluida_en",
+      "name": "GET visitas_realizadas",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 701,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_2",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/iniciar_formulario",
+      "name": "iniciar_formulario",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_realizada_id\": \"{{ _.visita_realizada_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 702,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_3",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/campos?select=id,codigo,tipo,opciones,obligatorio",
+      "name": "GET campos del formulario",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 703,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_4",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/responder_campo",
+      "name": "responder_campo (Ejemplo texto)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"formulario_diligenciado_id\": \"{{ _.formulario_diligenciado_id }}\",\n  \"campo_id\": \"<CAMPO_UUID>\",\n  \"valor\": {\n    \"texto\": \"Prueba de campo\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 704,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_5",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/respuestas_formulario",
+      "name": "respuestas_formulario",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"formulario_diligenciado_id\": \"{{ _.formulario_diligenciado_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 705,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_6",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/commit_formulario",
+      "name": "commit_formulario",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"formulario_diligenciado_id\": \"{{ _.formulario_diligenciado_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 706,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7_7",
+      "_type": "request",
+      "parentId": "fld_7",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/evidencias?select=campo_formulario,storage_path",
+      "name": "GET evidencias (Imágenes)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 707,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_8_1",
+      "_type": "request",
+      "parentId": "fld_8",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/calificar_evaluador",
+      "name": "calificar_evaluador",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"solicitud_id\": \"{{ _.solicitud_id }}\",\n  \"evaluador_id\": \"<EVALUADOR_UUID>\",\n  \"estrellas\": 5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.sol_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 801,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_8_2",
+      "_type": "request",
+      "parentId": "fld_8",
+      "modified": 1786901671745,
+      "created": 1786901671745,
+      "url": "{{ _.base_url }}/rest/v1/rpc/marcar_no_encontrada",
+      "name": "marcar_no_encontrada",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"visita_realizada_id\": \"{{ _.visita_realizada_id }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.anon_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.ea_token }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 802,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1_admin_sol",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786908635399,
+      "created": 1786908635399,
+      "url": "{{ _.base_url }}/auth/v1/admin/users",
+      "name": "Admin Create Solicitante (Bypass Rate Limit)",
+      "description": "Crea y confirma automáticamente al usuario Solicitante usando la clave service_role sin enviar correos.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"solicitante@example.com\",\n  \"password\": \"Prueba1234\",\n  \"email_confirm\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.service_role_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.service_role_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 105,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1_admin_ea",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786908635399,
+      "created": 1786908635399,
+      "url": "{{ _.base_url }}/auth/v1/admin/users",
+      "name": "Admin Create Evaluador A (Bypass Rate Limit)",
+      "description": "Crea y confirma automáticamente al Evaluador A usando la clave service_role sin enviar correos.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"eval-a@example.com\",\n  \"password\": \"Prueba1234\",\n  \"email_confirm\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.service_role_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.service_role_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 106,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1_admin_eb",
+      "_type": "request",
+      "parentId": "fld_1",
+      "modified": 1786908635399,
+      "created": 1786908635399,
+      "url": "{{ _.base_url }}/auth/v1/admin/users",
+      "name": "Admin Create Evaluador B (Bypass Rate Limit)",
+      "description": "Crea y confirma automáticamente al Evaluador B usando la clave service_role sin enviar correos.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"eval-b@example.com\",\n  \"password\": \"Prueba1234\",\n  \"email_confirm\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "apikey",
+          "value": "{{ _.service_role_key }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.service_role_key }}"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 107,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}

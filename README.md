@@ -1,5 +1,7 @@
 # Foinikis — régimen TypeScript + Postgres
 
+![logo](./img/logo-provisional.jpg)
+
 API de evaluación post-sismo. El front (app o WhatsApp) es un facade:
 los invariantes viven en Postgres; TypeScript solo reduce cuántos errores
 llegan hasta ahí.
