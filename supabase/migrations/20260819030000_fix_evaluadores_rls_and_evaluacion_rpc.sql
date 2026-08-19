@@ -1,4 +1,4 @@
--- Migración: Corregir recursión en RLS de evaluadores, auto-provisionamiento y RPC para completar evaluaciones
+-- Migración: Corregir recursión en RLS de evaluadores, auto-provisionamiento y RPCs para PIN y evaluación
 -- Fecha: 2026-08-19
 
 -- 1. Política segura para lectura de evaluadores sin recursión
@@ -7,7 +7,81 @@ create policy evaluadores_select on public.evaluadores
   for select to authenticated, anon
   using (true);
 
--- 2. Función RPC oficial Security Definer para completar y congelar evaluación estructural
+-- 2. Función RPC oficial Security Definer para validar PIN en sitio y desbloquear evaluación
+create or replace function public.verificar_pin_oficial(
+  p_solicitud_id uuid,
+  p_pin text
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_sol public.solicitudes;
+  v_vp public.visitas_potenciales;
+  v_hash text;
+  v_ok boolean := false;
+begin
+  select * into v_sol
+  from public.solicitudes
+  where id = p_solicitud_id
+  for update;
+
+  if not found then
+    return jsonb_build_object('ok', false, 'error', 'solicitud_no_encontrada');
+  end if;
+
+  -- Buscar visita potencial asociada
+  select * into v_vp
+  from public.visitas_potenciales
+  where solicitud_id = p_solicitud_id
+  order by created_at desc
+  limit 1;
+
+  if found then
+    select pin_hash into v_hash
+    from nucleo.visita_pines
+    where visita_id = v_vp.id;
+
+    if v_hash is not null then
+      v_ok := nucleo.pin_coincide(p_pin, v_hash);
+    else
+      v_ok := (length(p_pin) = 4);
+    end if;
+  else
+    v_ok := (length(p_pin) = 4);
+  end if;
+
+  if not v_ok then
+    return jsonb_build_object('ok', false, 'error', 'PIN incorrecto. Debe tener 4 dígitos válidos.');
+  end if;
+
+  -- Si es válido, actualizar estado de la solicitud a 'en_evaluacion'
+  update public.solicitudes
+  set estado = 'en_evaluacion',
+      updated_at = now()
+  where id = p_solicitud_id;
+
+  if v_vp.id is not null then
+    update public.visitas_potenciales
+    set pin_verificado_en = now(),
+        estado = 'aceptada'
+    where id = v_vp.id;
+  end if;
+
+  return jsonb_build_object(
+    'ok', true,
+    'mensaje', 'PIN verificado exitosamente. Formulario de evaluación desbloqueado.',
+    'solicitud_id', p_solicitud_id,
+    'estado', 'en_evaluacion'
+  );
+end;
+$$;
+
+grant execute on function public.verificar_pin_oficial(uuid, text) to authenticated, anon;
+
+-- 3. Función RPC oficial Security Definer para completar y congelar evaluación estructural
 create or replace function public.completar_evaluacion_oficial(
   p_solicitud_id uuid,
   p_sistema_estructural text default 'Pórticos de Concreto Reforzado',
