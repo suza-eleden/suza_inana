@@ -13,7 +13,7 @@ Foinikis existe para coordinar esa evaluación de campo:
 - Quien habita o administra el predio **solicita** una visita (ubicación, disponibilidad, tamaño estimado).
 - El sistema **propone visitas** a evaluadores cuya cobertura, agenda y perfil coinciden.
 - El evaluador **acepta o rechaza**. Si acepta, un **PIN de 4 cifras** verifica que quien llega es quien el sistema despachó.
-- La visita produce un **formulario diligenciado** (fotos como respuestas `imagen` y un dictamen derivado de la clasificación AIS). Una solicitud exige **al menos dos evaluadores distintos**; si discrepan, una tercera visita desempata.
+- La visita produce un **formulario diligenciado** (fotos como respuestas `imagen` y un dictamen derivado del cartel oficial según Decreto 1171 de 2026 / Circular Conjunta 73). Una solicitud exige **al menos dos evaluadores distintos**; si discrepan, una tercera visita desempata.
 - La confianza del evaluador **sube o baja** según coincida con su par (y según la calificación del solicitante).
 
 El nombre del problema de arranque es explícito: **score de evaluador en frío**. Un ingeniero nuevo no tiene historial; el sistema arranca en un prior (`0.50`) y solo mueve el score con evidencia de pares.
@@ -24,7 +24,7 @@ El nombre del problema de arranque es explícito: **score de evaluador en frío*
 
 ### RF-1. Registro de evaluadores
 
-- Ingeniero **voluntario** u **oficial**.
+- Ingeniero **voluntario** u **oficial** con registro RUPE (P1 a P4).
 - Foto de la tarjeta profesional (Storage).
 - Transporte propio, área de cobertura (punto + radio), horario disponible (`tstzrange`).
 - Score de confianza: lo calcula el núcleo, no el cliente. Prior `0.50`; al cerrar una evaluación con par, \(+0.05\) si coinciden, \(-0.08\) si no (acotado a \([0.05, 0.95]\)).
@@ -65,9 +65,10 @@ El nombre del problema de arranque es explícito: **score de evaluador en frío*
 
 - Un formulario diligenciado por `visita_realizada`. El cliente pregunta el campo actual y manda una respuesta; el cursor vive en Postgres.
 - Fotos: respuesta `imagen` con URI del bucket `evidencias` (no base64). `evidencias` es una vista sobre esas respuestas.
-- El dictamen `habitable | restringido | insegura` sale de `clasificacion_dano` (AIS 1–2 / 3 / 4–5) en `commit_formulario`, no de un `resultado` suelto.
+- El dictamen `habitable | restringido | insegura` sale de la asignación del cartel oficial (Decreto 1171/2026: Verde 1 / Amarillo 2 / Rojo 3) en `commit_formulario`, no de un `resultado` suelto.
 - Mínimo 2 visitas realizadas, **evaluadores distintos** (`UNIQUE (solicitud_id, evaluador_id)`).
 - Máximo 3. Si las dos primeras discrepan, el generador puede despachar una tercera.
+
 
 ### RF-6. Consultas / exportación
 

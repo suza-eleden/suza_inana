@@ -278,6 +278,7 @@ Antes de iniciar la ejecución de los casos de prueba en Insomnia, asegúrate de
 - [ ] No es posible escribir directamente en `solicitudes` o `visitas` mediante `INSERT`/`UPDATE` directo (debe ser a través de RPCs).
 - [ ] La aceptación de una visita entrega el PIN de 4 dígitos **únicamente una vez**.
 - [ ] La verificación de 2 PINs fallidos invalida la visita y genera una alerta de sistema.
-- [ ] `iniciar_formulario` funciona de manera strictly idempotente.
-- [ ] `commit_formulario` bloquea el cierre si faltan campos obligatorios o el croquis.
+- [ ] `iniciar_formulario` funciona de manera strictly idempotente y carga el formulario oficial D1171.
+- [ ] `commit_formulario` bloquea el cierre si faltan campos obligatorios o las fotos obligatorias (Fachada y Cartel instalado).
 - [ ] Los tests automatizados (`npm test`) y la verificación de tipos (`npm run typecheck`) pasan con **0 errores**.
+

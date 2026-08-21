@@ -186,7 +186,7 @@ curl -sS "${BASE}/rest/v1/rpc/iniciar_formulario" \
   -d "{\"visita_realizada_id\":\"${VR_ID}\"}"
 echo; echo
 
-echo "### 9d. responder campos obligatorios + croquis"
+echo "### 9d. responder campos obligatorios + evidencias"
 CAMPOS="$(curl -sS "${BASE}/rest/v1/campos?formulario_id=eq.${FORM_ID}&select=id,codigo,tipo,opciones,obligatorio" \
   -H "apikey: ${ANON}" -H "Authorization: Bearer ${EA_TOKEN}")"
 python3 - "${BASE}" "${ANON}" "${EA_TOKEN}" "${FD_ID}" "${CAMPOS}" <<'PY'
@@ -199,9 +199,11 @@ def valor(campo):
     if campo["tipo"] == "texto":
         return {"texto": "prueba"}
     if campo["tipo"] == "imagen":
-        return {"storage_path": "uid/croquis.jpg"}
+        return {"storage_path": "uid/evidencia.jpg"}
     if campo["tipo"] == "geolocalizacion":
         return {"lat": 4.711, "lng": -74.0721}
+    if campo["codigo"] == "cartel_clasificacion":
+        return {"valor": 2} # Amarillo (Uso Restringido)
     if campo["codigo"] == "clasificacion_dano":
         return {"valor": 3}
     opciones = campo.get("opciones") or []
@@ -222,7 +224,7 @@ def rpc(nombre, payload):
         return json.loads(resp.read().decode())
 
 for campo in campos:
-    if not campo["obligatorio"] and campo["codigo"] != "esquema":
+    if not campo["obligatorio"] and campo["codigo"] not in ("esquema", "foto_3_dano_critico"):
         continue
     estado = rpc("responder_campo", {
         "formulario_diligenciado_id": fd_id,
@@ -231,8 +233,9 @@ for campo in campos:
     })
     if not estado.get("ok"):
         raise SystemExit(f"responder_campo falló en {campo['codigo']}: {estado}")
-print("obligatorios + esquema ok")
+print("obligatorios + evidencias ok")
 PY
+
 echo
 
 echo "### 9e. respuestas_formulario"

@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { ZodError } from "zod";
-import { mapearClasificacionAis } from "../src/domain/formulario.js";
+import {
+  mapearCartelD1171,
+  mapearClasificacionAis,
+} from "../src/domain/formulario.js";
 import {
   parseEstadoFormularioJson,
   parseIniciarFormulario,
@@ -13,7 +16,27 @@ const CAMPO_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 const VISITA_ID = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
 const FORM_ID = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
 
+describe("mapearCartelD1171", () => {
+  it("1 es habitable (Cartel Verde)", () => {
+    expect(mapearCartelD1171(1)).toBe("habitable");
+  });
+
+  it("2 es restringido (Cartel Amarillo)", () => {
+    expect(mapearCartelD1171(2)).toBe("restringido");
+  });
+
+  it("3 es insegura (Cartel Rojo)", () => {
+    expect(mapearCartelD1171(3)).toBe("insegura");
+  });
+
+  it("rechaza valores fuera de 1–3", () => {
+    expect(() => mapearCartelD1171(0)).toThrow(RangeError);
+    expect(() => mapearCartelD1171(4)).toThrow(RangeError);
+  });
+});
+
 describe("mapearClasificacionAis", () => {
+
   it("1 y 2 son habitables", () => {
     expect(mapearClasificacionAis(1)).toBe("habitable");
     expect(mapearClasificacionAis(2)).toBe("habitable");

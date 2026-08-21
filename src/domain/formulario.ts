@@ -80,6 +80,25 @@ export type EstadoFormulario = Readonly<{
   resultado: ResultadoEvaluacion | undefined;
 }>;
 
+export type PerfilRupe = "P1" | "P2" | "P3" | "P4" | "otro";
+
+export type SeveridadD1171 = "N" | "M" | "S" | "NA";
+
+export type CartelOficialD1171 = 1 | 2 | 3;
+
+export function mapearCartelD1171(valor: number): ResultadoEvaluacion {
+  if (valor === 1) {
+    return "habitable"; // Verde (Inspeccionada)
+  }
+  if (valor === 2) {
+    return "restringido"; // Amarillo (Uso Restringido)
+  }
+  if (valor === 3) {
+    return "insegura"; // Rojo (Inseguro / Peligro de Colapso)
+  }
+  throw new RangeError(`cartel D1171 fuera de 1–3: ${String(valor)}`);
+}
+
 export function mapearClasificacionAis(valor: number): ResultadoEvaluacion {
   if (valor === 1 || valor === 2) {
     return "habitable";
@@ -92,3 +111,4 @@ export function mapearClasificacionAis(valor: number): ResultadoEvaluacion {
   }
   throw new RangeError(`clasificacion AIS fuera de 1–5: ${String(valor)}`);
 }
+

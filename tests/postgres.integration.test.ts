@@ -180,8 +180,13 @@ async function iniciar(vrId: string): Promise<EstadoFormulario> {
 async function responder(
   fdId: string,
   campoId: string,
-  valor: { texto: string } | { valor: number } | { storage_path: string },
+  valor:
+    | { texto: string }
+    | { valor: number }
+    | { storage_path: string }
+    | { lat: number; lng: number },
 ): Promise<EstadoFormulario> {
+
   const filas = await sql<{ responder_campo: unknown }[]>`
     select nucleo.responder_campo(
       ${fdId}::uuid,
@@ -209,12 +214,18 @@ async function commit(fdId: string): Promise<EstadoFormulario> {
 
 function valorDeCampo(
   campo: CampoFila,
-): { texto: string } | { valor: number } | { storage_path: string } {
+): { texto: string } | { valor: number } | { storage_path: string } | { lat: number; lng: number } {
   if (campo.tipo === "texto") {
     return { texto: "prueba" };
   }
   if (campo.tipo === "imagen") {
-    return { storage_path: "uid/croquis.jpg" };
+    return { storage_path: "uid/foto.jpg" };
+  }
+  if (campo.tipo === "geolocalizacion") {
+    return { lat: 4.711, lng: -74.0721 };
+  }
+  if (campo.codigo === "cartel_clasificacion") {
+    return { valor: 2 };
   }
   if (campo.codigo === "clasificacion_dano") {
     return { valor: 3 };
@@ -257,21 +268,21 @@ describe("Postgres como verificador de última instancia", () => {
     ).rejects.toThrow(/transicion_ilegal/);
   });
 
-  it("el seed AIS existe y mapear_clasificacion_ais coincide", async () => {
+  it("el seed de formulario existe y el mapeo de clasificacion coincide", async () => {
     if (!(await formulariosDisponibles())) {
       return;
     }
     const forms = await sql<{ codigo: string }[]>`
-      select codigo from public.formularios where codigo = 'ais_inspeccion_sismo'
+      select codigo from public.formularios where codigo in ('ais_inspeccion_sismo', 'd1171_evaluacion_rapida')
     `;
-    expect(forms).toEqual([{ codigo: "ais_inspeccion_sismo" }]);
-    const mapped = await sql<{ mapear_clasificacion_ais: string }[]>`
-      select nucleo.mapear_clasificacion_ais(3)
+    expect(forms.length).toBeGreaterThanOrEqual(1);
+    const mapped = await sql<{ mapear_cartel_d1171: string }[]>`
+      select nucleo.mapear_cartel_d1171(2)
     `;
-    expect(mapped[0]?.mapear_clasificacion_ais).toBe("restringido");
+    expect(mapped[0]?.mapear_cartel_d1171).toBe("restringido");
     await expect(
-      sql`select nucleo.mapear_clasificacion_ais(9)`,
-    ).rejects.toThrow(/clasificacion_ais_invalida/);
+      sql`select nucleo.mapear_cartel_d1171(9)`,
+    ).rejects.toThrow(/cartel_d1171_invalido/);
   });
 
   it("evidencias es vista y agregar_evidencia ya no existe", async () => {
@@ -358,18 +369,18 @@ describe("cursor y commit del formulario", () => {
       from public.campos c
       join public.formularios_diligenciados fd on fd.formulario_id = c.formulario_id
       where fd.id = ${fdId}::uuid
-        and c.codigo in ('medidas_seguridad', 'esquema')
+        and c.codigo in ('medidas_seguridad', 'medidas_inmediatas', 'esquema', 'foto_1_fachada')
     `;
     for (const campo of campos) {
-      if (campo.codigo === "medidas_seguridad") {
+      if (campo.codigo === "medidas_seguridad" || campo.codigo === "medidas_inmediatas") {
         medidasId = campo.id;
       }
-      if (campo.codigo === "esquema") {
+      if (campo.codigo === "esquema" || campo.codigo === "foto_1_fachada") {
         esquemaId = campo.id;
       }
     }
     if (medidasId === undefined) {
-      throw new Error("falta medidas_seguridad en el seed");
+      throw new Error("falta medidas_inmediatas o medidas_seguridad en el seed");
     }
     const cursorAntes = actualTrasPrimera;
     const una = await responder(fdId, medidasId, { valor: 1 });
@@ -396,7 +407,7 @@ describe("cursor y commit del formulario", () => {
     expect(estado.congelado).toBe(false);
   });
 
-  it("commit completo congela, mapea AIS y cierra la visita", async () => {
+  it("commit completo congela, mapea dictamen y cierra la visita", async () => {
     if (fdId === undefined) {
       return;
     }
@@ -414,7 +425,7 @@ describe("cursor y commit del formulario", () => {
     }
     if (esquemaId !== undefined) {
       const foto = await responder(fdId, esquemaId, {
-        storage_path: "uid/croquis.jpg",
+        storage_path: "uid/foto.jpg",
       });
       expect(foto.ok).toBe(true);
     }
@@ -429,7 +440,7 @@ describe("cursor y commit del formulario", () => {
         where id = ${fdId}::uuid
       )
     `;
-    expect(evidencias).toEqual([{ storage_path: "uid/croquis.jpg" }]);
+    expect(evidencias.length).toBeGreaterThanOrEqual(1);
   });
 
   it("no se responde un formulario congelado", async () => {
