@@ -172,60 +172,99 @@ export type Database = {
         }
         Relationships: []
       }
+      coordinadores: {
+        Row: {
+          auth_user_id: string
+          cargo: string | null
+          created_at: string
+          id: string
+          nombre: string
+        }
+        Insert: {
+          auth_user_id: string
+          cargo?: string | null
+          created_at?: string
+          id?: string
+          nombre: string
+        }
+        Update: {
+          auth_user_id?: string
+          cargo?: string | null
+          created_at?: string
+          id?: string
+          nombre?: string
+        }
+        Relationships: []
+      }
       formularios: {
         Row: {
           codigo: string
           created_at: string
+          descripcion: string | null
+          estado: Database["public"]["Enums"]["estado_formulario_def"]
           id: string
           nombre: string
+          publicado_en: string | null
           version: number
         }
         Insert: {
           codigo: string
           created_at?: string
+          descripcion?: string | null
+          estado?: Database["public"]["Enums"]["estado_formulario_def"]
           id?: string
           nombre: string
+          publicado_en?: string | null
           version?: number
         }
         Update: {
           codigo?: string
           created_at?: string
+          descripcion?: string | null
+          estado?: Database["public"]["Enums"]["estado_formulario_def"]
           id?: string
           nombre?: string
+          publicado_en?: string | null
           version?: number
         }
         Relationships: []
       }
       formularios_diligenciados: {
         Row: {
+          autor_id: string | null
           campo_actual_id: string | null
           campo_siguiente_id: string | null
           congelado_en: string | null
           created_at: string
           formulario_id: string
           id: string
+          solicitud_id: string | null
           updated_at: string
-          visita_realizada_id: string
+          visita_realizada_id: string | null
         }
         Insert: {
+          autor_id?: string | null
           campo_actual_id?: string | null
           campo_siguiente_id?: string | null
           congelado_en?: string | null
           created_at?: string
           formulario_id: string
           id?: string
+          solicitud_id?: string | null
           updated_at?: string
-          visita_realizada_id: string
+          visita_realizada_id?: string | null
         }
         Update: {
+          autor_id?: string | null
           campo_actual_id?: string | null
           campo_siguiente_id?: string | null
           congelado_en?: string | null
           created_at?: string
           formulario_id?: string
           id?: string
+          solicitud_id?: string | null
           updated_at?: string
-          visita_realizada_id?: string
+          visita_realizada_id?: string | null
         }
         Relationships: []
       }
@@ -542,8 +581,67 @@ export type Database = {
     Functions: {
       aceptar_visita: { Args: { visita_id: string }; Returns: Json }
       iniciar_formulario: {
-        Args: { visita_realizada_id: string }
+        Args: {
+          codigo_formulario?: string | undefined
+          solicitud_id?: string | undefined
+          version?: number | undefined
+          visita_realizada_id?: string | undefined
+        }
         Returns: Json
+      }
+      crear_formulario: {
+        Args: {
+          codigo: string
+          descripcion?: string | undefined
+          nombre: string
+        }
+        Returns: Json
+      }
+      publicar_formulario: {
+        Args: {
+          formulario_id: string
+        }
+        Returns: Json
+      }
+      archivar_formulario: {
+        Args: {
+          formulario_id: string
+        }
+        Returns: Json
+      }
+      crear_nueva_version_formulario: {
+        Args: {
+          codigo: string
+        }
+        Returns: Json
+      }
+      agregar_campo: {
+        Args: {
+          cardinalidad?:
+            | Database["public"]["Enums"]["cardinalidad_campo"]
+            | undefined
+          codigo: string
+          formulario_id: string
+          obligatorio?: boolean | undefined
+          opciones?: Json | undefined
+          orden: number
+          prompt: string
+          tipo: Database["public"]["Enums"]["tipo_campo"]
+        }
+        Returns: Json
+      }
+      registrar_coordinador: {
+        Args: {
+          cargo?: string | undefined
+          nombre: string
+        }
+        Returns: {
+          auth_user_id: string
+          cargo: string | null
+          created_at: string
+          id: string
+          nombre: string
+        }
       }
       estado_formulario: {
         Args: { formulario_diligenciado_id: string }
@@ -554,7 +652,7 @@ export type Database = {
           formulario_diligenciado_id: string
           campo_id: string
           valor: Json
-          respuesta_id?: string
+          respuesta_id?: string | undefined
         }
         Returns: Json
       }
@@ -708,6 +806,7 @@ export type Database = {
       verificar_pin: { Args: { pin: string; visita_id: string }; Returns: Json }
     }
     Enums: {
+      estado_formulario_def: "borrador" | "publicado" | "archivado"
       cardinalidad_campo: "uno" | "muchos"
       tipo_campo:
         | "texto"
@@ -878,6 +977,7 @@ export const Constants = {
       tipo_alerta: ["pin_incorrecto"],
       tipo_evaluador: ["voluntario", "oficial"],
       visita_potencial_estado: ["creada", "aceptada", "rechazada", "cancelada"],
+      estado_formulario_def: ["borrador", "publicado", "archivado"],
       cardinalidad_campo: ["uno", "muchos"],
       tipo_campo: [
         "texto",

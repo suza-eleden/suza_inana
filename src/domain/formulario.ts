@@ -1,5 +1,23 @@
-import type { CampoId, FormularioDiligenciadoId, VisitaRealizadaId } from "../brands.js";
+import type {
+  CampoId,
+  FormularioDiligenciadoId,
+  FormularioId,
+  SolicitudId,
+  VisitaRealizadaId,
+} from "../brands.js";
 import type { GeoPoint, ResultadoEvaluacion } from "./estados.js";
+
+export type EstadoFormularioDef = "borrador" | "publicado" | "archivado";
+
+export type Formulario = Readonly<{
+  id: FormularioId;
+  codigo: string;
+  nombre: string;
+  version: number;
+  estado: EstadoFormularioDef;
+  descripcion?: string | null;
+  publicadoEn?: string | null;
+}>;
 
 export type TipoCampo =
   | "texto"
@@ -71,7 +89,12 @@ export type EstadoFormulario = Readonly<{
   ok: boolean;
   error: string | undefined;
   id: FormularioDiligenciadoId;
-  visitaRealizadaId: VisitaRealizadaId;
+  formularioId: FormularioId;
+  formularioCodigo?: string | undefined;
+  formularioVersion?: number | undefined;
+  visitaRealizadaId: VisitaRealizadaId | null;
+  solicitudId?: SolicitudId | null | undefined;
+  autorId?: string | null | undefined;
   campoActual: Campo | null;
   campoSiguiente: Campo | null;
   camposDiligenciados: readonly CampoId[];

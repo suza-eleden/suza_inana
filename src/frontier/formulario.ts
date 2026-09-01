@@ -1,13 +1,21 @@
 import { z } from "zod";
 import {
   campoIdSchema,
+  coordinadorIdSchema,
   formularioDiligenciadoIdSchema,
   formularioIdSchema,
   respuestaIdSchema,
+  solicitudIdSchema,
   visitaRealizadaIdSchema,
 } from "../brands.js";
 import { geoPointSchema, resultadoEvaluacionSchema } from "../domain/estados.js";
 import type { EstadoFormulario } from "../domain/formulario.js";
+
+export const estadoFormularioDefSchema = z.enum([
+  "borrador",
+  "publicado",
+  "archivado",
+]);
 
 export const tipoCampoSchema = z.enum([
   "texto",
@@ -80,8 +88,18 @@ export const valorRespuestaSchema = z.union([
 export type ValorRespuesta = z.infer<typeof valorRespuestaSchema>;
 
 export const iniciarFormularioInput = z
-  .object({ visitaRealizadaId: visitaRealizadaIdSchema })
-  .strict();
+  .object({
+    visitaRealizadaId: visitaRealizadaIdSchema.optional(),
+    codigoFormulario: z.string().min(1).optional(),
+    solicitudId: solicitudIdSchema.optional(),
+    version: z.number().int().positive().optional(),
+  })
+  .strict()
+  .refine(
+    (val) =>
+      val.visitaRealizadaId !== undefined || val.codigoFormulario !== undefined,
+    { message: "debe especificar visitaRealizadaId o codigoFormulario" },
+  );
 
 export const formularioDiligenciadoIdInput = z
   .object({ formularioDiligenciadoId: formularioDiligenciadoIdSchema })
@@ -96,12 +114,64 @@ export const responderCampoInput = z
   })
   .strict();
 
+export const crearFormularioInput = z
+  .object({
+    codigo: z.string().min(1),
+    nombre: z.string().min(1),
+    descripcion: z.string().optional(),
+  })
+  .strict();
+
+export const publicarFormularioInput = z
+  .object({ formularioId: formularioIdSchema })
+  .strict();
+
+export const archivarFormularioInput = z
+  .object({ formularioId: formularioIdSchema })
+  .strict();
+
+export const crearNuevaVersionFormularioInput = z
+  .object({ codigo: z.string().min(1) })
+  .strict();
+
+export const agregarCampoInput = z
+  .object({
+    formularioId: formularioIdSchema,
+    codigo: z.string().min(1),
+    tipo: tipoCampoSchema,
+    prompt: z.string().min(1),
+    orden: z.number().int(),
+    obligatorio: z.boolean().default(true),
+    cardinalidad: cardinalidadCampoSchema.default("uno"),
+    opciones: z.array(opcionCampoSchema).optional(),
+  })
+  .strict();
+
+export const registrarCoordinadorInput = z
+  .object({
+    nombre: z.string().min(1),
+    cargo: z.string().optional(),
+  })
+  .strict();
+
+export const coordinadorFilaSchema = z.object({
+  id: coordinadorIdSchema,
+  auth_user_id: z.string().uuid(),
+  nombre: z.string(),
+  cargo: z.string().nullable().optional(),
+  created_at: z.string(),
+});
+
 const estadoBaseSchema = z.object({
   ok: z.boolean(),
   error: z.string().optional(),
   id: formularioDiligenciadoIdSchema,
-  visita_realizada_id: visitaRealizadaIdSchema,
+  visita_realizada_id: visitaRealizadaIdSchema.nullable().optional(),
   formulario_id: formularioIdSchema,
+  formulario_codigo: z.string().optional(),
+  formulario_version: z.number().int().optional(),
+  solicitud_id: solicitudIdSchema.nullable().optional(),
+  autor_id: z.string().uuid().nullable().optional(),
   campo_actual_id: campoIdSchema.nullable(),
   campo_siguiente_id: campoIdSchema.nullable(),
   campo_actual: campoPublicoSchema.nullable(),
@@ -121,7 +191,12 @@ export function estadoFromHttp(
     ok: raw.ok,
     error: raw.error,
     id: raw.id,
-    visitaRealizadaId: raw.visita_realizada_id,
+    formularioId: raw.formulario_id,
+    formularioCodigo: raw.formulario_codigo,
+    formularioVersion: raw.formulario_version,
+    visitaRealizadaId: raw.visita_realizada_id ?? null,
+    solicitudId: raw.solicitud_id ?? null,
+    autorId: raw.autor_id ?? null,
     campoActual: raw.campo_actual,
     campoSiguiente: raw.campo_siguiente,
     camposDiligenciados: raw.campos_diligenciados,

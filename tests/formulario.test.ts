@@ -120,6 +120,56 @@ describe("frontera formulario", () => {
     expect(estado.congelado).toBe(false);
   });
 
+  it("parsea iniciar_formulario para formulario autonomo", () => {
+    const parsed = parseIniciarFormulario(
+      JSON.stringify({
+        codigoFormulario: "reporte_inundacion",
+        solicitudId: "11111111-1111-4111-8111-111111111111",
+      }),
+    );
+    expect(parsed.codigoFormulario).toBe("reporte_inundacion");
+    expect(parsed.visitaRealizadaId).toBeUndefined();
+    expect(parsed.solicitudId).toBe("11111111-1111-4111-8111-111111111111");
+  });
+
+  it("rechaza iniciar_formulario sin visitaRealizadaId ni codigoFormulario", () => {
+    expect(() => parseIniciarFormulario(JSON.stringify({}))).toThrow(ZodError);
+  });
+
+  it("hidrata estado de formulario autonomo", () => {
+    const estado = parseEstadoFormularioJson({
+      ok: true,
+      id: FD_ID,
+      formulario_id: FORM_ID,
+      formulario_codigo: "reporte_inundacion",
+      formulario_version: 1,
+      visita_realizada_id: null,
+      solicitud_id: null,
+      autor_id: "99999999-9999-4999-8999-999999999999",
+      campo_actual_id: CAMPO_ID,
+      campo_siguiente_id: null,
+      campo_actual: {
+        id: CAMPO_ID,
+        codigo: "nivel_agua_cm",
+        tipo: "texto",
+        prompt: "Nivel estimado del agua en cm",
+        orden: 1,
+        obligatorio: true,
+        cardinalidad: "uno",
+        opciones: null,
+      },
+      campo_siguiente: null,
+      campos_diligenciados: [],
+      congelado: false,
+      completo_obligatorio: false,
+    });
+    expect(estado.ok).toBe(true);
+    expect(estado.visitaRealizadaId).toBeNull();
+    expect(estado.formularioCodigo).toBe("reporte_inundacion");
+    expect(estado.formularioVersion).toBe(1);
+    expect(estado.autorId).toBe("99999999-9999-4999-8999-999999999999");
+  });
+
   it("parsea error de dominio conservando el estado", () => {
     const estado = parseEstadoFormularioJson({
       ok: false,

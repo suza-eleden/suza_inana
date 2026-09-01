@@ -40,3 +40,6 @@ export type FormularioDiligenciadoId = z.infer<
 
 export const respuestaIdSchema = z.string().uuid().brand<"RespuestaId">();
 export type RespuestaId = z.infer<typeof respuestaIdSchema>;
+
+export const coordinadorIdSchema = z.string().uuid().brand<"CoordinadorId">();
+export type CoordinadorId = z.infer<typeof coordinadorIdSchema>;

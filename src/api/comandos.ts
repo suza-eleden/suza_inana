@@ -3,10 +3,17 @@ import type { Database } from "../generated/database.js";
 import { decodeJson, encodeJson } from "../frontier/json.js";
 import {
   aceptacionHttpSchema,
+  parseAgregarCampo,
+  parseArchivarFormulario,
+  parseCoordinadorFila,
+  parseCrearFormulario,
+  parseCrearNuevaVersionFormulario,
   parseCrearSolicitud,
   parseEstadoFormularioId,
   parseEstadoFormularioJson,
   parseIniciarFormulario,
+  parsePublicarFormulario,
+  parseRegistrarCoordinador,
   parseResponderCampo,
   parseRespuestasFormularioJson,
   parseVerificarPin,
@@ -120,6 +127,9 @@ export async function iniciarFormulario(
   const input = parseIniciarFormulario(raw);
   const { data, error } = await client.rpc("iniciar_formulario", {
     visita_realizada_id: input.visitaRealizadaId,
+    codigo_formulario: input.codigoFormulario,
+    solicitud_id: input.solicitudId,
+    version: input.version,
   });
   if (error) {
     throw error;
@@ -193,4 +203,99 @@ export async function commitFormulario(
     throw error;
   }
   return parseEstadoFormularioJson(data);
+}
+
+export async function crearFormulario(
+  client: SupabaseClient<Database>,
+  raw: string,
+) {
+  const input = parseCrearFormulario(raw);
+  const { data, error } = await client.rpc("crear_formulario", {
+    codigo: input.codigo,
+    nombre: input.nombre,
+    descripcion: input.descripcion,
+  });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
+export async function publicarFormulario(
+  client: SupabaseClient<Database>,
+  raw: string,
+) {
+  const input = parsePublicarFormulario(raw);
+  const { data, error } = await client.rpc("publicar_formulario", {
+    formulario_id: input.formularioId,
+  });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
+export async function archivarFormulario(
+  client: SupabaseClient<Database>,
+  raw: string,
+) {
+  const input = parseArchivarFormulario(raw);
+  const { data, error } = await client.rpc("archivar_formulario", {
+    formulario_id: input.formularioId,
+  });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
+export async function crearNuevaVersionFormulario(
+  client: SupabaseClient<Database>,
+  raw: string,
+) {
+  const input = parseCrearNuevaVersionFormulario(raw);
+  const { data, error } = await client.rpc("crear_nueva_version_formulario", {
+    codigo: input.codigo,
+  });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
+export async function agregarCampo(
+  client: SupabaseClient<Database>,
+  raw: string,
+) {
+  const input = parseAgregarCampo(raw);
+  const opciones = input.opciones !== undefined ? encodeJson(input.opciones) : null;
+  const { data, error } = await client.rpc("agregar_campo", {
+    formulario_id: input.formularioId,
+    codigo: input.codigo,
+    tipo: input.tipo,
+    prompt: input.prompt,
+    orden: input.orden,
+    obligatorio: input.obligatorio,
+    cardinalidad: input.cardinalidad,
+    opciones,
+  });
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
+export async function registrarCoordinador(
+  client: SupabaseClient<Database>,
+  raw: string,
+) {
+  const input = parseRegistrarCoordinador(raw);
+  const { data, error } = await client.rpc("registrar_coordinador", {
+    nombre: input.nombre,
+    cargo: input.cargo,
+  });
+  if (error) {
+    throw error;
+  }
+  return parseCoordinadorFila(data);
 }

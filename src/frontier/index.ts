@@ -11,10 +11,17 @@ import {
 } from "./http.js";
 import { solicitudFilaSchema, visitaFilaSchema } from "./db.js";
 import {
+  agregarCampoInput,
+  archivarFormularioInput,
+  coordinadorFilaSchema,
+  crearFormularioInput,
+  crearNuevaVersionFormularioInput,
   estadoFormularioHttpSchema,
   estadoFromHttp,
   formularioDiligenciadoIdInput,
   iniciarFormularioInput,
+  publicarFormularioInput,
+  registrarCoordinadorInput,
   responderCampoInput,
   respuestasFormularioHttpSchema,
 } from "./formulario.js";
@@ -67,6 +74,34 @@ export function parseRespuestasFormularioJson(raw: unknown) {
   return respuestasFormularioHttpSchema.parse(raw);
 }
 
+export function parseCrearFormulario(raw: string) {
+  return crearFormularioInput.parse(decodeJson(raw));
+}
+
+export function parsePublicarFormulario(raw: string) {
+  return publicarFormularioInput.parse(decodeJson(raw));
+}
+
+export function parseArchivarFormulario(raw: string) {
+  return archivarFormularioInput.parse(decodeJson(raw));
+}
+
+export function parseCrearNuevaVersionFormulario(raw: string) {
+  return crearNuevaVersionFormularioInput.parse(decodeJson(raw));
+}
+
+export function parseAgregarCampo(raw: string) {
+  return agregarCampoInput.parse(decodeJson(raw));
+}
+
+export function parseRegistrarCoordinador(raw: string) {
+  return registrarCoordinadorInput.parse(decodeJson(raw));
+}
+
+export function parseCoordinadorFila(raw: unknown) {
+  return coordinadorFilaSchema.parse(raw);
+}
+
 export {
   solicitudFromFila,
   visitaFromFila,
@@ -88,8 +123,16 @@ export {
   visitaIdInput,
 } from "./http.js";
 export {
+  agregarCampoInput,
+  archivarFormularioInput,
+  coordinadorFilaSchema,
+  crearFormularioInput,
+  crearNuevaVersionFormularioInput,
+  estadoFormularioDefSchema,
   estadoFormularioHttpSchema,
   iniciarFormularioInput,
+  publicarFormularioInput,
+  registrarCoordinadorInput,
   responderCampoInput,
   valorRespuestaSchema,
 } from "./formulario.js";

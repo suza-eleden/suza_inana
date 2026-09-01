@@ -145,13 +145,16 @@ Clientes delgados (web o WhatsApp) no recorren un wizard propio: preguntan `esta
 
 ```mermaid
 erDiagram
+  coordinadores ||--o{ formularios : administra
   personas ||--o{ solicitudes : pone
+  personas ||--o{ formularios_diligenciados : responde_como_autor
   evaluadores ||--o{ visitas_potenciales : recibe
   solicitudes ||--o{ visitas_potenciales : genera
   solicitudes ||--o{ visitas_realizadas : acumula
   evaluadores ||--o{ visitas_realizadas : dictamina
   visitas_potenciales ||--o| visitas_realizadas : origina
-  visitas_realizadas ||--|| formularios_diligenciados : uno_a_uno
+  visitas_realizadas |o--o| formularios_diligenciados : asocia_opcionalmente
+  solicitudes |o--o{ formularios_diligenciados : asocia_opcionalmente
   formularios ||--o{ campos : contiene
   formularios ||--o{ formularios_diligenciados : instancia
   campos ||--o{ respuestas : recibe
@@ -161,6 +164,12 @@ erDiagram
   solicitudes ||--o{ calificaciones : recibe
   evaluadores ||--o{ calificaciones : es_calificado
 
+  coordinadores {
+    uuid id PK
+    uuid auth_user_id UK
+    text nombre
+    text cargo
+  }
   personas {
     uuid id PK
     uuid auth_user_id
@@ -208,8 +217,11 @@ erDiagram
   formularios {
     uuid id PK
     text codigo UK
+    int version UK
     text nombre
-    int version
+    text descripcion
+    estado_formulario_def estado
+    timestamptz publicado_en
   }
   campos {
     uuid id PK
@@ -223,8 +235,10 @@ erDiagram
   }
   formularios_diligenciados {
     uuid id PK
-    uuid visita_realizada_id UK
     uuid formulario_id FK
+    uuid autor_id FK
+    uuid visita_realizada_id FK
+    uuid solicitud_id FK
     uuid campo_actual_id FK
     uuid campo_siguiente_id FK
     timestamptz congelado_en
