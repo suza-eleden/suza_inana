@@ -1,4 +1,4 @@
-# Foinikis — régimen TypeScript + Postgres
+# Inana — régimen TypeScript + Postgres
 
 ![logo](./img/logo-provisional.jpg)
 
@@ -24,7 +24,7 @@ npm run typecheck && npm run lint && npm test
 ```
 
 Variables: `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` (salen de `supabase status`).
-Para el test de Postgres: `FOINIKIS_DB_URL` (default `postgresql://postgres:postgres@127.0.0.1:54322/postgres`).
+Para el test de Postgres: `INANA_DB_URL` (default `postgresql://postgres:postgres@127.0.0.1:54322/postgres`).
 
 ## Máquina de estados
 

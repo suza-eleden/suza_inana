@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
-# Pruebas HTTP de Foinikis (Supabase local).
-# No uses el puerto de Eve: si Eve está en 54321, arrancá Foinikis en otro
-# (FOINIKIS_URL) o pará Eve con `supabase stop` desde ese repo.
+# Pruebas HTTP de Inana (Supabase local).
+# No uses el puerto de Eve: si Eve está en 54321, arrancá Inana en otro
+# (INANA_URL) o pará Eve con `supabase stop` desde ese repo.
 #
 #   chmod +x scripts/pruebas-api.sh
-#   FOINIKIS_URL=http://127.0.0.1:54321 ./scripts/pruebas-api.sh
+#   INANA_URL=http://127.0.0.1:54321 ./scripts/pruebas-api.sh
 #
 # Claves locales por defecto = JWT demo de `supabase start`.
 # Para las reales: `cd supabase && supabase status -o env`
 
 set -euo pipefail
 
-BASE="${FOINIKIS_URL:-http://127.0.0.1:54321}"
-ANON="${FOINIKIS_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0}"
-SERVICE="${FOINIKIS_SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU}"
+BASE="${INANA_URL:-http://127.0.0.1:54321}"
+ANON="${INANA_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0}"
+SERVICE="${INANA_SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU}"
 
 VENTANA='[\"2026-08-14T08:00:00+00\",\"2026-08-14T20:00:00+00\")'
 STAMP="$(date +%s)"

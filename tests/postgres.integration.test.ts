@@ -4,7 +4,7 @@ import { parseEstadoFormularioJson } from "../src/frontier/index.js";
 import type { EstadoFormulario } from "../src/domain/formulario.js";
 
 const url =
-  process.env["FOINIKIS_DB_URL"] ??
+  process.env["INANA_DB_URL"] ??
   "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const sql = postgres(url, { max: 1, connect_timeout: 2 });
@@ -82,10 +82,10 @@ async function insertarUsuario(email: string): Promise<string> {
 
 async function crearEscenario(): Promise<EscenarioFormulario> {
   const authEval = await insertarUsuario(
-    `eval-${crypto.randomUUID()}@foinikis.test`,
+    `eval-${crypto.randomUUID()}@inana.test`,
   );
   const authSol = await insertarUsuario(
-    `sol-${crypto.randomUUID()}@foinikis.test`,
+    `sol-${crypto.randomUUID()}@inana.test`,
   );
   const personas = await sql<{ id: string }[]>`
     insert into public.personas (auth_user_id, nombre)

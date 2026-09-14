@@ -5,19 +5,19 @@
   "__export_source": "insomnia.desktop.app:v10.0.0",
   "resources": [
     {
-      "_id": "wrk_foinikis",
+      "_id": "wrk_inana",
       "_type": "workspace",
       "parentId": null,
       "modified": 1786901671745,
       "created": 1786901671745,
-      "name": "Foinikis API",
-      "description": "Colección completa de endpoints HTTP/RPC para la API de evaluación post-sismo de Foinikis en Supabase.",
+      "name": "Inana API",
+      "description": "Colección completa de endpoints HTTP/RPC para la API de evaluación post-sismo de Inana en Supabase.",
       "scope": "collection"
     },
     {
-      "_id": "env_foinikis_base",
+      "_id": "env_inana_base",
       "_type": "environment",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "Entorno Supabase (Local / Cloud)",
@@ -56,7 +56,7 @@
     {
       "_id": "fld_1",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "1. Auth (Signup & Login)",
@@ -68,7 +68,7 @@
     {
       "_id": "fld_2",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "2. Registro de Usuarios",
@@ -80,7 +80,7 @@
     {
       "_id": "fld_3",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "3. Solicitudes",
@@ -92,7 +92,7 @@
     {
       "_id": "fld_4",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "4. Sistema (Service Role)",
@@ -104,7 +104,7 @@
     {
       "_id": "fld_5",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "5. Buzón y Gestión de Visitas",
@@ -116,7 +116,7 @@
     {
       "_id": "fld_6",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "6. PIN y Verificación",
@@ -128,7 +128,7 @@
     {
       "_id": "fld_7",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "7. Formulario y Respuestas",
@@ -140,7 +140,7 @@
     {
       "_id": "fld_8",
       "_type": "request_group",
-      "parentId": "wrk_foinikis",
+      "parentId": "wrk_inana",
       "modified": 1786901671745,
       "created": 1786901671745,
       "name": "8. Calificación y Casos Especiales",

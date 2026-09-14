@@ -1,15 +1,15 @@
-# Plan de Pruebas de Aseguramiento de Calidad (QA) — API Foinikis
+# Plan de Pruebas de Aseguramiento de Calidad (QA) — API Inana
 
-Este documento define el protocolo de pruebas de QA para la API de **Foinikis** (evaluación post-sismo). Cubre la verificación del flujo completo de inspección, la seguridad a nivel de filas (RLS), la máquina de estados de PostgreSQL y las funciones RPC expuestas a través de Supabase.
+Este documento define el protocolo de pruebas de QA para la API de **Inana** (evaluación post-sismo). Cubre la verificación del flujo completo de inspección, la seguridad a nivel de filas (RLS), la máquina de estados de PostgreSQL y las funciones RPC expuestas a través de Supabase.
 
 ---
 
 ## 📋 Información del Proyecto
 
-- **Nombre del Proyecto:** Foinikis — Régimen TypeScript + Postgres
+- **Nombre del Proyecto:** Inana — Régimen TypeScript + Postgres
 - **Entorno de Pruebas:** Local (`http://127.0.0.1:54321`) / Supabase Cloud (`https://<PROJECT_REF>.supabase.co`)
 - **Herramientas de QA:** Insomnia / Postman / `scripts/pruebas-api.sh` / cURL
-- **Colección de Insomnia:** [`foinikis-insomnia-collection.json`](file:///Users/alejandromorales/ws/foinikis/foinikis-insomnia-collection.json)
+- **Colección de Insomnia:** [`inana-insomnia-collection.json`](../inana-insomnia-collection.json)
 
 ---
 

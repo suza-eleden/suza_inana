@@ -1,4 +1,4 @@
-# Foinikis — documento de arquitectura
+# Inana — documento de arquitectura
 
 API REST de evaluación estructural post-sismo. El canal de presentación (app propia o WhatsApp) es un facade: los invariantes viven en Postgres.
 
@@ -8,7 +8,7 @@ API REST de evaluación estructural post-sismo. El canal de presentación (app p
 
 Tras un terremoto en Colombia hace falta decidir, en horas, si una casa o un edificio es habitable, de uso restringido o inseguro. Esa decisión no puede depender de un solo testimonio ni de un técnico no identificado: hay ingenieros voluntarios y oficiales, hay riesgo de fraude, y hay que cubrir más predios de los que un equipo institucional alcanza.
 
-Foinikis existe para coordinar esa evaluación de campo:
+Inana existe para coordinar esa evaluación de campo:
 
 - Quien habita o administra el predio **solicita** una visita (ubicación, disponibilidad, tamaño estimado).
 - El sistema **propone visitas** a evaluadores cuya cobertura, agenda y perfil coinciden.
@@ -454,7 +454,7 @@ sequenceDiagram
 
 ## CURL pruebas básicas
 
-Requisitos: stack **Foinikis** arriba (no el de Eve si Eve ya ocupa `54321`). Claves demo de `supabase start`, o `supabase status -o env`.
+Requisitos: stack **Inana** arriba (no el de Eve si Eve ya ocupa `54321`). Claves demo de `supabase start`, o `supabase status -o env`.
 
 ```bash
 BASE=http://127.0.0.1:54321
@@ -470,15 +470,15 @@ Siempre `apikey` y `Authorization`. Flujo encadenado (IDs y PIN extraídos solos
 ```bash
 curl -sS "$BASE/auth/v1/signup" \
   -H "apikey: $ANON" -H "Content-Type: application/json" \
-  -d '{"email":"solicitante@foinikis.test","password":"Prueba1234"}'
+  -d '{"email":"solicitante@inana.test","password":"Prueba1234"}'
 
 curl -sS "$BASE/auth/v1/signup" \
   -H "apikey: $ANON" -H "Content-Type: application/json" \
-  -d '{"email":"eval-a@foinikis.test","password":"Prueba1234"}'
+  -d '{"email":"eval-a@inana.test","password":"Prueba1234"}'
 
 curl -sS "$BASE/auth/v1/token?grant_type=password" \
   -H "apikey: $ANON" -H "Content-Type: application/json" \
-  -d '{"email":"solicitante@foinikis.test","password":"Prueba1234"}'
+  -d '{"email":"solicitante@inana.test","password":"Prueba1234"}'
 ```
 
 ### Altas
